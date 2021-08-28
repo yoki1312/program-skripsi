@@ -17,10 +17,11 @@
     </div><!-- /.container-fluid -->
 </section>
 <style>
-       .select2-container  .select2-dropdown, 
-   .select2-container .select2-selection--multiple {
-    max-width: 300px;
-  }
+    .select2-container .select2-dropdown,
+    .select2-container .select2-selection--multiple {
+        max-width: 300px;
+    }
+
 </style>
 
 <!-- Main content -->
@@ -29,7 +30,7 @@
         <div class="row">
             <div class="col-12">
                 <div class="card">
-                <div class="card-header">
+                    <div class="card-header">
                     </div>
                     <div class="card-body">
                         <table id="ngoding" class="table table-sm table-bordered table-striped table-hover"

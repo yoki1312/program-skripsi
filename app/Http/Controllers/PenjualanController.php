@@ -68,7 +68,7 @@ class PenjualanController extends Controller
 
     public function datap()
 	{
-        return DataTables::of(PenjualanBarang::leftjoin('status_penjualan','status_penjualan.id_status','=','penjualan.id_status_penjualan')->get())  
+        return DataTables::of(PenjualanBarang::leftjoin('status_penjualan','status_penjualan.id_status','=','penjualan.id_status_penjualan')->leftjoin('users','penjualan.id_users','=','users.id')->get())  
         ->addIndexColumn()
         ->addColumn('action', function($data){
             $button = '';

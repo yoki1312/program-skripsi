@@ -30,9 +30,9 @@ class TipsController extends Controller
         ->addIndexColumn()
         ->addColumn('action', function($row){
                $btn = '';
-               $btn = $btn.' <a href="tipss/show/'.$row->id_tips.'" class="edit btn btn-warning btn-xs"> <i style="color:white;" class="fa fa-bars" aria-hidden="true"></i></a>';
+               $btn .= ' <a href="tipss/show/'.$row->id_tips.'" class="edit btn btn-warning btn-sm"> <i style="color:white;" class="fa fa-bars" aria-hidden="true"></i></a>';
             //    $btn = $btn.' <a href="tipss/edit/'.$row->id_tips.'" class="edit btn btn-primary btn-xs"> <i class="fa fa-edit" aria-hidden="true"></i></a>';
-               $btn = $btn.'&nbsp;<button type="button" name="edit" id="'.$row->id_tips.'" class="delete btn btn-danger btn-xs"> <i class="fa fa-trash" aria-hidden="true"></i></button>';
+               $btn .= '&nbsp;<a href="hapus/artikel/'.$row->id_tips.'" type="button" name="edit" id="'.$row->id_tips.'" class="delete btn btn-danger btn-sm"> <i class="fa fa-trash" aria-hidden="true"></i></a>';
 
                 return $btn;
         })
@@ -152,5 +152,10 @@ class TipsController extends Controller
     {
         Tips::where('id_tips', $id)->update(array('foto_tips' => null));
         return response()->json(['success' => 'Data Added successfully.']);
+    }
+    public function deleted_artikel($id)
+    {
+        Tips::where('id_tips', $id)->delete();
+        return redirect()->back()->with(['hapus' => 'Data berhasil disimpan']);
     }
 }

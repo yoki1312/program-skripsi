@@ -21,7 +21,7 @@ $(document).ready(function () {
                 }
             },
             {
-                data: 'nama_users',
+                data: 'name',
                 class: 'text-center'
             },
             {

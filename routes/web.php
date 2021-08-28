@@ -59,6 +59,7 @@ Route::group(['middleware' => 'admin'], function () {
     Route::get('/tipss/show/{id}','App\Http\Controllers\TipsController@show');
     Route::post('/tipss/hapusGambar/{id}', 'App\Http\Controllers\TipsController@hapusGambar');
     Route::post('/tipss/update','App\Http\Controllers\TipsController@update');
+    Route::get('/hapus/artikel/{id}','App\Http\Controllers\TipsController@deleted_artikel');
 
     Route::resource('modul', 'App\Http\Controllers\ModulController');
     Route::post('/update/no_urut/modul','App\Http\Controllers\ModulController@editurut');
