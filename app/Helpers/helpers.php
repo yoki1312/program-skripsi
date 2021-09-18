@@ -2,6 +2,7 @@
 use App\Models\Produk;
 use App\Models\TemporaryOrder;
 use App\Models\Kategori;
+use App\Services\Midtrans\CreateSnapTokenService;
 
 function AllProdukOne(){
     $Produk = Produk::skip(0)->take(4)->whereNull('deleted_at')->whereNull('status')->get();
@@ -77,5 +78,18 @@ function printJSON($v){
      $sql = "select ta.no_invoice, tc.name, count(tb.id_penjualan) as pembelian from penjualan ta LEFT JOIN detail_penjualan tb ON ta.id_penjualan = tb.id_penjualan INNER JOIN users tc ON ta.id_users = tc.id group by ta.id_penjualan LIMIT 5 ";
      return DB::select($sql);
  }
+
+function snapToken(){
+    $snapToken = 'asdasd';
+    if (empty($snapToken)) {
+        // Jika snap token masih NULL, buat token snap dan simpan ke database
+
+        $midtrans = new CreateSnapTokenService($order);
+        $snapToken = $midtrans->getSnapToken();
+
+        $order->snap_token = $snapToken;
+        $order->save();
+    }
+}
 
 ?>

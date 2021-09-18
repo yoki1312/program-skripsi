@@ -181,7 +181,7 @@ class PenjualanController extends Controller
             $pes = DB::select("SELECT ta.*, tb.hargaPenjualan, tc.gambar_sampul, tc.nama_barang,tc.hargaJual, tc.diskon FROM penjualan ta LEFT JOIN detail_penjualan tb ON ta.id_penjualan = tb.id_penjualan LEFT JOIN barang tc ON tb.id_barang = tc.id_barang where ta.id_penjualan = '$id_penjualan' ");
         
             
-            return $data->no_invoice;
+            return $id_penjualan;
 
     }
 

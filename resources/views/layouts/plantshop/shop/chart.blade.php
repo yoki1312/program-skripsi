@@ -79,7 +79,8 @@
                 <h5 id="ket-po"> </h5>
                 <hr>
                 <h5>Pilih Metode Pembayaran</h5>
-                <h4><input type="checkbox" checked /> &nbsp;<i class="fa fa-whatsapp" aria-hidden="true"></i> 08113336722 ( Konfirmasi kepada penjual )</h4>
+                <h4><input type="checkbox" checked /> &nbsp;<i class="fa fa-whatsapp" aria-hidden="true"></i>
+                    08113336722 ( Konfirmasi kepada penjual )</h4>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Batal</button>
@@ -106,7 +107,7 @@
             ajax: 'datapreorder',
             columns: [{
                     data: 'nama_barang',
-                    class: 'text-center'
+                    class: 'text-left'
                 },
                 {
                     data: 'hargaJual',
@@ -150,11 +151,11 @@
             var i;
             var total = 0;
             var grandTotal = 0;
-            if(data.length != 0 ){
+            if (data.length != 0) {
                 $('#modal-po').modal('show');
                 for (i = 0; i < data.length; i++) {
                     var pro = data[i];
-                    if(pro == null){
+                    if (pro == null) {
                         console.log('telek');
                     }
                     total = pro['hargaJual'] - pro['diskon'];
@@ -163,32 +164,32 @@
                         '</td><td class="text-right">' + convertToRupiah(total) + '</td></tr>');
                     console.log(pro['nama_barang']);
                 }
-            }else{
+            } else {
                 Swal.fire(
-                        'Anda belum memilih barang',
-                        'Silahkan pilih barang untuk melanjutkan pembayaran',
-                        'info'
-                    )
+                    'Anda belum memilih barang',
+                    'Silahkan pilih barang untuk melanjutkan pembayaran',
+                    'info'
+                )
             }
             $('.total-po').val(convertToRupiah(grandTotal));
-            $('#ket-po').text('Total Yang Harus Dibayar : '+ convertToRupiah(grandTotal));
+            $('#ket-po').text('Total Yang Harus Dibayar : ' + convertToRupiah(grandTotal));
         });
-        $(document).on('click','.btn-bayar', function(){
+        $(document).on('click', '.btn-bayar', function () {
             console.log(data);
             let id_barang = [];
             for (i = 0; i < data.length; i++) {
                 id_barang.push({
-                    id_barang : data[i]['id_barang']
+                    id_barang: data[i]['id_barang']
                 })
             }
             console.log(id_barang)
             axios.post('penjualan/storeShop', {
-                id_barang : id_barang
+                id_barang: id_barang
             }).then((response) => {
-                window.open('https://wa.me/6285730982703?text=Konfirmasi%20pembelian%20no-transaksi%20"'+ response.data +'"');
-               
-                    $('#modal-po').modal('hide');
-                    window.location.href = "{{ url('myOrder')}}";
+                // window.open('https://wa.me/6285730982703?text=Konfirmasi%20pembelian%20no-transaksi%20"'+ response.data +'"');
+
+                $('#modal-po').modal('hide');
+                window.location.href = "{{ url('pembelian/bayar/')}}" + '/' + response.data;
             }).catch((error) => {
                 console.log(error.response)
             });

@@ -251,6 +251,7 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::post('penjualan/storeShop', 'App\Http\Controllers\PenjualanController@storeShop');
+Route::get('pembelian/bayar/{id}', 'App\Http\Controllers\PembelianBayarController@show');
 // bank data frond end
 Route::resource('bank_data', 'App\Http\Controllers\BankDataFrondController');
 Route::get('/detail/bankdata/{id}','App\Http\Controllers\BankDataFrondController@show');
