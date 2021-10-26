@@ -99,4 +99,13 @@ class ShopController extends Controller
     {
         //
     }
+
+    public function detailProduk($id){
+        $data = DB::table('barang')->select('barang.*','kategori.nama_kategori','bankdata.kebutuhanAir','bankdata.kebutuhanSinar','bankdata.caraPerawatan')->leftjoin('bankdata','bankdata.id_bankdata','barang.id_bankdata')->join('kategori','kategori.id_kategori','barang.id_kategori')->where('id_barang',$id)->first();
+        $detail = DB::table('detail_barang')->where('id_barang',$id)->get();
+
+        // printJSON($data);
+
+        return view('v2.detail-produk',compact('data','detail'));
+    }
 }
