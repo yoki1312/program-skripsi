@@ -1,5 +1,5 @@
-@extends('layouts.plantshop.template_view')
-@section('konten')
+@extends('v2.index')
+@section('konten_area')
 @foreach($barang as $b)
 <div class="breadcrumbs_area">
     <div class="container">
