@@ -53,12 +53,17 @@ class ShopController extends Controller
      */
     public function show($id)
     {
-        $data = DB::table('barang')->select('barang.*','kategori.nama_kategori','bankdata.kebutuhanAir','bankdata.kebutuhanSinar','bankdata.caraPerawatan')->leftjoin('bankdata','bankdata.id_bankdata','barang.id_bankdata')->join('kategori','kategori.id_kategori','barang.id_kategori')->where('id_barang',$id)->first();
-        $detail = DB::table('detail_barang')->where('id_barang',$id)->get();
-
-        // printJSON($data);
-
-        return view('v2.detail-produk',compact('data','detail'));
+        $barang = DB::table('barang')
+        ->leftjoin('kategori','kategori.id_kategori','=', 'barang.id_kategori')
+        ->leftjoin('subKategori','subKategori.id_subKategori','=', 'barang.id_subKategori')
+        ->leftjoin('bankdata','bankdata.id_bankdata','=', 'barang.id_bankdata')
+        ->select('barang.*','kategori.nama_kategori','subKategori.nama_subKategori','bankdata.*')
+        ->where('barang.id_barang',$id)
+        ->get();
+        // printJSON($barang);
+        $barang_detail = DetailBarang::where('id_barang',$id)->get();
+        $koment = Koment::where('produk_id',$id)->get();
+        return view('layouts.plantshop.shop.detail',compact('barang','barang_detail','koment'));
     }
 
     /**
@@ -93,14 +98,5 @@ class ShopController extends Controller
     public function destroy($id)
     {
         //
-    }
-
-    public function detailProduk($id){
-        $data = DB::table('barang')->select('barang.*','kategori.nama_kategori','bankdata.kebutuhanAir','bankdata.kebutuhanSinar','bankdata.caraPerawatan')->leftjoin('bankdata','bankdata.id_bankdata','barang.id_bankdata')->join('kategori','kategori.id_kategori','barang.id_kategori')->where('id_barang',$id)->first();
-        $detail = DB::table('detail_barang')->where('id_barang',$id)->get();
-
-        // printJSON($data);
-
-        return view('v2.detail-produk',compact('data','detail'));
     }
 }
