@@ -205,7 +205,7 @@ Route::post('update/profile', 'App\Http\Controllers\ProfileController@update');
 
 Route::get('produk/json','App\Http\Controllers\BarangController@jsonProduk');
 Route::get('/', function () {
-    return view('layouts.plantshop.home');
+    return view('v2.index');
 })->name('home');
 Route::get('/chart', function () {
     return view('layouts.plantshop.shop.chart');
