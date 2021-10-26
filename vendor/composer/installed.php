@@ -6,7 +6,7 @@
     'aliases' => 
     array (
     ),
-    'reference' => '333dbf614f1551bd70248521f946f618c646ec25',
+    'reference' => '33978266e67ecdd0f904b753c20f422f84778ad8',
     'name' => 'laravel/laravel',
   ),
   'versions' => 
@@ -616,7 +616,7 @@
       'aliases' => 
       array (
       ),
-      'reference' => '333dbf614f1551bd70248521f946f618c646ec25',
+      'reference' => '33978266e67ecdd0f904b753c20f422f84778ad8',
     ),
     'laravel/passport' => 
     array (
@@ -1919,15 +1919,6 @@
       array (
       ),
       'reference' => 'b43b05cf43c1b6d849478965062b6ef73e223bb5',
-    ),
-    'twilio/sdk' => 
-    array (
-      'pretty_version' => '6.30.0',
-      'version' => '6.30.0.0',
-      'aliases' => 
-      array (
-      ),
-      'reference' => 'd60bc2faf10656c100ddfa55d06c33bd8b782957',
     ),
     'uxweb/sweet-alert' => 
     array (
