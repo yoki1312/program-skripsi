@@ -38,7 +38,7 @@
                     <div class="main">
                         <div class="payment_select">
                             <label class="container_radio">Transfer Antar Bank
-                                <input type="radio" id="tipe-pembayaran" value="Transfer Antar Bank" checked
+                                <input type="radio" data-tipe="1" id="tipe-pembayaran" value="Transfer Antar Bank" checked
                                     name="payment_method">
                                 <span class="checkmark"></span>
                             </label>
@@ -46,7 +46,7 @@
                         </div>
                         <div class="payment_select">
                             <label class="container_radio">Transaksi Manual (WhatsApp)
-                                <input type="radio" id="tipe-pembayaran" value="Transaksi Manual" name="payment_method">
+                                <input data-tipe="2" type="radio" id="tipe-pembayaran" value="Transaksi Manual" name="payment_method">
                                 <span class="checkmark"></span>
                             </label>
                             <i class="icon_wallet"></i>
@@ -108,7 +108,8 @@
                                     </table>
                                 </div>
                             </div>
-                            <a class="btn_1 gradient full-width mb_5 order btn-bayar">Bayar Sekarang</a>
+                            <a class="btn_1 gradient full-width mb_5 order btn-bayar btn-tf">Bayar Sekarang</a>
+                            <a style="display:none" target="_blank" href="https://wa.me/6285730982703?text=Konfirmasi%20pembelian%20{{ Auth::user()->name }}%20" class="btn_1 gradient full-width mb_5 btn-wa">Konfirmasi Whatsaap</a>
                         </div>
                     </div>
                 </div>
@@ -181,6 +182,15 @@
                 }
             })
         });
+        $(document).on('change','#tipe-pembayaran',function(){
+            if($(this).attr('data-tipe') == 1){
+                $('.btn-wa').hide();
+                $('.btn-tf').show();
+            }else{
+                $('.btn-wa').show();
+                $('.btn-tf').hide();
+            }
+        })
     })
 
 </script>

@@ -59,6 +59,44 @@ class LoginUserController extends Controller
         }
  
     }
+
+    public function loginPembeli(Request $request)
+    {
+        
+        $rules = [
+            'email'                 => 'required|email',
+            'password'              => 'required|string'
+        ];
+ 
+        $messages = [
+            'email.required'        => 'Email wajib diisi',
+            'email.email'           => 'Email tidak valid',
+            'password.required'     => 'Password wajib diisi',
+            'password.string'       => 'Password harus berupa string'
+        ];
+ 
+        $validator = Validator::make($request->all(), $rules, $messages);
+ 
+        if($validator->fails()){
+            return redirect()->back()->withErrors($validator)->withInput($request->all);
+        }
+ 
+        $data = [
+            'email'     => $request->input('email'),
+            'password'  => $request->input('password'),
+        ];
+ 
+        if (Auth::check()) { // true sekalian session field di users nanti bisa dipanggil via Auth
+            //Login Success
+            return redirect('/index');
+        }else if(  Auth::attempt($data)){
+            return redirect('/index')->with(['success' => 'Login berhasil sebagai '.Auth::user()->name.'']);
+            
+        } else { // false
+            return redirect()->back()->with(['error' => 'Login error']);
+        }
+ 
+    }
  
     public function showFormRegister()
     {

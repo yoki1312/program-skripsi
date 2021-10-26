@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="FooYes - Quality delivery or takeaway food">
     <meta name="author" content="Ansonika">
-    <title>FooYes - Quality delivery or takeaway food</title>
+    <title>Plantshop.id</title>
 
     <!-- Favicons-->
     <link rel="shortcut icon" href="{!! asset('v2/img/favicon.ico') !!}" type="image/x-icon">
@@ -129,20 +129,23 @@
                 <li>
                     <div class="dropdown user clearfix">
                         <a href="#" data-toggle="dropdown">
-                        @if(Auth::user()->foto_profile == null)
-                            <figure><img src="https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png" alt=""></figure>
-                        @else
-                            <figure><img src="{{ asset('upload/foto_profile/'.Auth::user()->foto_profile) }}" alt=""></figure>
-                        @endif
-                            
+                            @if(Auth::user()->foto_profile == null)
+                            <figure><img src="https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png"
+                                    alt=""></figure>
+                            @else
+                            <figure><img src="{{ asset('upload/foto_profile/'.Auth::user()->foto_profile) }}" alt="">
+                            </figure>
+                            @endif
+
                             <span>{{ Auth::user()->name }}</span>
                         </a>
                         <div class="dropdown-menu">
                             <div class="dropdown-menu-content">
                                 <ul>
-                                    <li><a href="{{ url('transaksi-v2') }}"><i class="fa fa-exchange" aria-hidden="true"></i>Transaksi</a></li>
+                                    <li><a href="{{ url('transaksi-v2') }}"><i class="fa fa-exchange"
+                                                aria-hidden="true"></i>Transaksi</a></li>
                                     <li><a href="{{ url('profile-v2') }}"><i class="icon_cog"></i>Profile</a></li>
-                                    <li class="logout"><a><i class="icon_key"></i>Log out</a></li>
+                                    <li><a class="logout"><i class="icon_key"></i>Log out</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -152,9 +155,10 @@
             </ul>
             @endif
             <ul id="top_menu" style="margin-top: 10px;">
-            @if(!isset(Auth::user()->id))
-                <li><a href="#sign-in-dialog" id="sign-in" ><i style="font-size: 20px" class="fa fa-sign-in" aria-hidden="true"></i></a></li>
-            @endif
+                @if(!isset(Auth::user()->id))
+                <li><a href="#sign-in-dialog" id="sign-in"><i style="font-size: 20px" class="fa fa-sign-in"
+                            aria-hidden="true"></i></a></li>
+                @endif
                 <li>
                     <div class="dropdown dropdown-cart">
                         <a class="keranjang"><i style="font-size: 20px"
@@ -164,7 +168,8 @@
 
                             </ul>
                             <div class="total_drop">
-                                <div class="clearfix add_bottom_15"><strong>Total</strong><span id="total-order">Rp. 0</span></div>
+                                <div class="clearfix add_bottom_15"><strong>Total</strong><span id="total-order">Rp.
+                                        0</span></div>
                                 <a href="{{ url('order') }}" class="btn_1 outline">View Cart</a>
                             </div>
                         </div>
@@ -193,7 +198,7 @@
                         <a href="#0" class="show-submenu">Referensi</a>
                         <ul>
                             <li><a href="{{ url('artikel-v2') }}">Artikel</a></li>
-                            <li><a href="submit-rider.html">Bank Tanaman</a></li>
+                            <li><a href="{{ url('bank-data-v2') }}">Bank Tanaman</a></li>
                         </ul>
                     </li>
                     <li class="submenu">
@@ -224,11 +229,12 @@
             -ms-border-radius: 5px;
             border-radius: 5px;
             -webkit-box-shadow: 0px 0px 15px 0px rgb(0 0 0 / 30%);
-            -moz-box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.3);
+            -moz-box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.3);
             box-shadow: 0px 0px 15px 0px rgb(0 0 0 / 30%);
             z-index: 10000;
-            display:none;
+            display: none;
         }
+
     </style>
     <div id="message">Barang ditambahkan ke keranjang</div>
     <footer>
@@ -290,89 +296,90 @@
         <div class="modal_header">
             <h3>Sign In</h3>
         </div>
-        <form>
             <div class="sign-in-wrapper">
                 <a href="{{ url('auth/google') }}" class="social_bt google">Login with Google</a>
                 <div class="divider"><span>Or</span></div>
-                <div class="form-group">
-                    <label>Email</label>
-                    <input type="email" class="form-control" name="email" id="email">
-                    <i class="icon_mail_alt"></i>
-                </div>
-                <div class="form-group">
-                    <label>Password</label>
-                    <input type="password" class="form-control" name="password" id="password" value="">
-                    <i class="icon_lock_alt"></i>
-                </div>
-                <div class="clearfix add_bottom_15">
-                    <div class="checkboxes float-left">
-                        <label class="container_check">Remember me
-                            <input type="checkbox">
-                            <span class="checkmark"></span>
-                        </label>
-                    </div>
-                    <div class="float-right"><a id="forgot" href="javascript:void(0);">Forgot Password?</a></div>
-                </div>
-                <div class="text-center">
-                    <input type="submit" value="Log In" class="btn_1 full-width mb_5">
-                    Don’t have an account? <a href="register.html">Sign up</a>
-                </div>
-                <div id="forgot_pw">
+                <form method="POST" action="{{ url('loginPembeli') }}">
+                    @csrf
                     <div class="form-group">
-                        <label>Please confirm login email below</label>
-                        <input type="email" class="form-control" name="email_forgot" id="email_forgot">
+                        <label>Email</label>
+                        <input type="email" class="form-control" name="email" id="email">
                         <i class="icon_mail_alt"></i>
                     </div>
-                    <p>You will receive an email containing a link allowing you to reset your password to a new
-                        preferred one.</p>
-                    <div class="text-center"><input type="submit" value="Reset Password" class="btn_1"></div>
-                </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" class="form-control" name="password" id="password" value="">
+                        <i class="icon_lock_alt"></i>
+                    </div>
+                    <div class="clearfix add_bottom_15">
+                        <div class="checkboxes float-left">
+                            <label class="container_check">Remember me
+                                <input type="checkbox">
+                                <span class="checkmark"></span>
+                            </label>
+                        </div>
+                        <div class="float-right"><a id="forgot" href="javascript:void(0);">Forgot Password?</a></div>
+                    </div>
+                    <div class="text-center">
+                        <input type="submit" value="Log In" class="btn_1 full-width mb_5">
+                        Don’t have an account? <a href="register.html">Sign up</a>
+                    </div>
+                    <div id="forgot_pw">
+                        <div class="form-group">
+                            <label>Please confirm login email below</label>
+                            <input type="email" class="form-control" name="email_forgot" id="email_forgot">
+                            <i class="icon_mail_alt"></i>
+                        </div>
+                        <p>You will receive an email containing a link allowing you to reset your password to a new
+                            preferred one.</p>
+                        <div class="text-center"><input type="submit" value="Reset Password" class="btn_1"></div>
+                    </div>
+                </form>
             </div>
-        </form>
         <!--form -->
     </div>
     @if ($message = Session::get('success'))
-            <script>
-                Swal.fire(
-                    'Berhasil!',
-                    '{{ $message }}',
-                    'success'
-                );
+    <script>
+        Swal.fire(
+            'Berhasil!',
+            '{{ $message }}',
+            'success'
+        );
 
-            </script>
-            @endif
+    </script>
+    @endif
 
-            @if ($message = Session::get('error'))
-            <script>
-                Swal.fire(
-                    'Gagal!',
-                    '{{ $message }}',
-                    'error'
-                );
+    @if ($message = Session::get('error'))
+    <script>
+        Swal.fire(
+            'Gagal!',
+            '{{ $message }}',
+            'error'
+        );
 
-            </script>
-            @endif
+    </script>
+    @endif
 
-            @if ($message = Session::get('warning'))
-            <div class="alert alert-warning alert-block">
-                <button type="button" class="close" data-dismiss="alert">×</button>
-                <strong>{{ $message }}</strong>
-            </div>
-            @endif
+    @if ($message = Session::get('warning'))
+    <div class="alert alert-warning alert-block">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <strong>{{ $message }}</strong>
+    </div>
+    @endif
 
-            @if ($message = Session::get('info'))
-            <div class="alert alert-info alert-block">
-                <button type="button" class="close" data-dismiss="alert">×</button>
-                <strong>{{ $message }}</strong>
-            </div>
-            @endif
+    @if ($message = Session::get('info'))
+    <div class="alert alert-info alert-block">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <strong>{{ $message }}</strong>
+    </div>
+    @endif
 
-            @if ($errors->any())
-            <div class="alert alert-danger">
-                <button type="button" class="close" data-dismiss="alert">×</button>
-                Please check the form below for errors
-            </div>
-            @endif
+    @if ($errors->any())
+    <div class="alert alert-danger">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        Please check the form below for errors
+    </div>
+    @endif
     <!-- /Sign In Modal -->
 
     <!-- COMMON SCRIPTS -->
@@ -403,14 +410,15 @@
                 }
             });
         }
-        function format_rp(v){
+
+        function format_rp(v) {
             var bilangan = v;
-	
-            var	number_string = bilangan.toString(),
-                sisa 	= number_string.length % 3,
-                rupiah 	= number_string.substr(0, sisa),
-                ribuan 	= number_string.substr(sisa).match(/\d{3}/g);
-                    
+
+            var number_string = bilangan.toString(),
+                sisa = number_string.length % 3,
+                rupiah = number_string.substr(0, sisa),
+                ribuan = number_string.substr(sisa).match(/\d{3}/g);
+
             if (ribuan) {
                 separator = sisa ? '.' : '';
                 rupiah += separator + ribuan.join('.');
@@ -438,16 +446,16 @@
             function getPreOrder() {
                 $.ajax({
                     type: "POST",
-                    url: '{{ url('getDataPreorder') }}',
+                    url: '{{ url('getDataPreorder ') }}',
                     data: {
                         "_token": $('meta[name="csrf-token"]').attr('content')
                     },
                     success: function (response) {
                         var i = 0;
                         $('.list-order').empty();
-                        if(response.length != 0){
-                            $('.list-order').attr('style','height: 200px; overflow: auto');
-                        }else{
+                        if (response.length != 0) {
+                            $('.list-order').attr('style', 'height: 200px; overflow: auto');
+                        } else {
                             $('.list-order').removeAttr('style');
 
                         }
@@ -458,12 +466,14 @@
                             $('.list-order').append(`<li>
                                     <figure><img src="/upload/img_barang/` + data['gambar_sampul'] + `" data-src="img/menu-thumb-1.jpg"
                                             alt="" width="50" height="50" class="lazy"></figure>
-                                    <strong><span>` + data['nama_barang'] + `</span>Rp. ` + format_rp(data['hargaJual']) + `</strong>
-                                    <a class="remove-order action" data-id="`+data['id_pre_order']+`"><i class="icon_trash_alt"></i></a>
+                                    <strong><span>` + data['nama_barang'] + `</span>Rp. ` + format_rp(data[
+                                'hargaJual']) + `</strong>
+                                    <a class="remove-order action" data-id="` + data['id_pre_order'] + `"><i class="icon_trash_alt"></i></a>
                                 </li>`);
                         }
-                        $('#total-order').text('Rp. '+format_rp(rp_order))
-                        $('.content-total-belanja').empty().append('<span class="total-belanja">' + i + '</span>');
+                        $('#total-order').text('Rp. ' + format_rp(rp_order))
+                        $('.content-total-belanja').empty().append('<span class="total-belanja">' + i +
+                            '</span>');
                     }
                 });
             }
@@ -482,7 +492,7 @@
         });
 
     </script>
-     <script src="{{ asset('admin/plugins/select2/js/select2.full.min.js') }}"></script>
+    <script src="{{ asset('admin/plugins/select2/js/select2.full.min.js') }}"></script>
     @yield('js')
 </body>
 

@@ -309,4 +309,7 @@ Route::post('/artikel-v2/removeKoment','App\Http\Controllers\ArtikelController@r
 //transaksi
 Route::get('/transaksi-v2','App\Http\Controllers\TransaksiController@index');
 Route::get('/transaksi-v2/batal/{id}','App\Http\Controllers\TransaksiController@pembatalanTransaksi');
+//login
+Route::post('loginPembeli', 'App\Http\Controllers\LoginUserController@loginPembeli');
+//
 
