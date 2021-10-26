@@ -46,7 +46,11 @@ class GoogleController extends Controller
                     'google_id'=> $user->id,
                     'password' => encrypt('123456dummy')
                 ]);
-    
+                $sendMaiil = [
+                    'title' => 'Pemberitahuan Pendaftaran Plantshop.id',
+                    'body' => 'Email anda berhasil terdaftar !!'
+                ];
+                \Mail::to($user->email)->send(new \App\Mail\SendMail($sendMaiil));
                 Auth::login($newUser);
      
                 return redirect('/index');

@@ -65,8 +65,20 @@ class PaymentController extends Controller
 				DB::table('temporary_order')->where('id_barang',$d->id_barang)->delete();
 			}
 			//end
+			
+			//send mail
+			$sendMaiil = [
+				'title' => 'Pemberitahuan Pembayaran',
+				'body' => 'Pembayaran transaksi '.$request->order_id. ' total '.$request->gross_amount.' berhasil!!'
+			];
+
+			$user = DB::table('users')->where('id',$order->id_users)->first();
+		   
+			\Mail::to($user->email)->send(new \App\Mail\SendMail($sendMaiil));
+			//
 
 		}
+
 
 		return response($data, 200);
     }

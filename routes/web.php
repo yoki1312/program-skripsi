@@ -313,4 +313,6 @@ Route::get('/transaksi-v2/batal/{id}','App\Http\Controllers\TransaksiController@
 //login
 Route::post('loginPembeli', 'App\Http\Controllers\LoginUserController@loginPembeli');
 //
+//send mail
+Route::get('kirim-email','App\Http\Controllers\MailController@index');
 
