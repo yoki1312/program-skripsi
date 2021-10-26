@@ -276,14 +276,14 @@ Route::get('ongkir/kota', 'App\Http\Controllers\OngkirController@getKota');
 Route::post('ongkir/harga', 'App\Http\Controllers\OngkirController@getOngkir');
 
 
-
+//v2
 Route::get('/index', function () { return view('v2.home'); });
 Route::get('/profile-v2', function () { return view('v2.profile'); });
 Route::get('/about-v2', function () { return view('v2.about-v2'); });
 //get produk
 Route::get('/produk-v2','App\Http\Controllers\FullShopController@indexV2');
 Route::post('/cari/produk-v2','App\Http\Controllers\FullShopController@indexV2');
-Route::get('/produk-v2/detail/{id}','App\Http\Controllers\ShopController@detailProduk');
+Route::get('/produk-v2/detail/{id}','App\Http\Controllers\FullShopController@detailProduk');
 //end
 //halaman order
 Route::get('/order','App\Http\Controllers\DataOrderController@order');
