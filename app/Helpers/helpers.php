@@ -97,4 +97,8 @@ function getTotalBarang(){
     return $data;
 }
 
+function toko(){
+    return DB::table('toko')->first();
+}
+
 ?>

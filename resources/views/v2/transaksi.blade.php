@@ -127,6 +127,9 @@
                         <h4>
                             <div class="btn-group" role="group" aria-label="Basic example">
                             <button type="button" class="btn btn-sm btn-outline-secondary"><?= $d->status_transaksi ?></button>
+                            @if($d->no_resi != 0)
+                            <button type="button" class="btn btn-outline-success btn-sm">Terima Barang</button>
+                            @endif
                             <a class="btn btn-info btn-sm" data-toggle="collapse" href="#penjualan{{ $d->id_penjualan }}" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">Detail</a>
                             </div>
                         </h4>

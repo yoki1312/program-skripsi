@@ -83,6 +83,10 @@ class TokoController extends Controller
         DB::table('toko')->where('id_toko', $request->id_toko)->update([
             'judul' => $request->judul,
             'about' => $request->about,
+            'alamat' => $request->alamat,
+            'kontak' => $request->kontak,
+            'email' => $request->email,
+            'maps' => $request->maps,
             'gambar' => $nama_file
             ]);
         return redirect()->back();

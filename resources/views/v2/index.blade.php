@@ -197,7 +197,7 @@
                         </ul>
                     </li>
                     <li class="submenu">
-                        <a href="{{ url('produk-v2') }}" class="show-submenu">Kontak Kami</a>
+                        <a href="{{ url('about-v2') }}" class="show-submenu">Kontak Kami</a>
                     </li>
                 </ul>
             </nav>
@@ -250,9 +250,9 @@
                     <h3 data-target="#collapse_3">Kontak Kami</h3>
                     <div class="collapse dont-collapse-sm contacts" id="collapse_3">
                         <ul>
-                            <li><i class="icon_house_alt"></i>97845 Baker st. 567<br>Perum Semen - Gresik</li>
-                            <li><i class="icon_mobile"></i>+94 423-23-221</li>
-                            <li><i class="icon_mail_alt"></i><a href="#0">plantshop@domain.com</a></li>
+                            <li><i class="icon_house_alt"></i>{{ toko()->alamat }}</li>
+                            <li><i class="icon_mobile"></i>{{ toko()->kontak }}</li>
+                            <li><i class="icon_mail_alt"></i><a href="#0">{{ toko()->email }}</a></li>
                         </ul>
                     </div>
                 </div>

@@ -53,6 +53,23 @@
                                                                         id="exampleFormControlTextarea1">{{ $t->judul }}</textarea>
                                                                 </div>
                                                                 <div class="col-lg-12 col-sm-12">
+                                                                    <label>Alamat</label><br>
+                                                                    <textarea name="alamat" class="form-control"
+                                                                        id="exampleFormControlTextarea1">{{ $t->alamat }}</textarea>
+                                                                </div>
+                                                                <div class="col-lg-12 col-sm-12">
+                                                                    <label>Maps Toko</label><br>
+                                                                    <input name="maps" class="form-control" value="{{ $t->maps }}" />
+                                                                </div>
+                                                                <div class="col-lg-12 col-sm-12">
+                                                                    <label>Nomor Pusat Bantuan</label><br>
+                                                                    <input name="kontak" class="form-control" value="{{ $t->kontak }}" />
+                                                                </div>
+                                                                <div class="col-lg-12 col-sm-12">
+                                                                    <label>Email Pusat Bantuan</label><br>
+                                                                    <input name="email" class="form-control" value="{{ $t->email }}">
+                                                                </div>
+                                                                <div class="col-lg-12 col-sm-12">
                                                                     <label>About</label><br>
                                                                     <textarea name="about" class="form-control"
                                                                         id="exampleFormControlTextarea1">{{ $t->about }}</textarea>
