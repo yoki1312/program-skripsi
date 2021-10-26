@@ -165,6 +165,7 @@ return [
         Barryvdh\DomPDF\ServiceProvider::class,
         // Barryvdh\Debugbar\ServiceProvider::class,
         UxWeb\SweetAlert\SweetAlertServiceProvider::class,
+        
 
         /*
          * Package Service Providers...
@@ -181,6 +182,7 @@ return [
         App\Providers\FortifyServiceProvider::class,
         App\Providers\JetstreamServiceProvider::class,
         Laravel\Passport\PassportServiceProvider::class,
+        Laravel\Socialite\SocialiteServiceProvider::class,
 
     ],
 
@@ -237,6 +239,7 @@ return [
         'PDF' => Barryvdh\DomPDF\Facade::class,
         // 'Debugbar' => Barryvdh\Debugbar\Facade::class,
         'Alert' => UxWeb\SweetAlert\SweetAlert::class,
+        'Socialite' => Laravel\Socialite\Facades\Socialite::class,
 
     ],
 

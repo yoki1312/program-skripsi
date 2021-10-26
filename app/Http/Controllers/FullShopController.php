@@ -26,6 +26,29 @@ class FullShopController extends Controller
  
 		return view('layouts.plantshop.shop.view',['produk' => $produk]);
     }
+    public function indexV2(Request $request)
+    {
+        $in = $request;
+        $sort_filter = '';
+        $id_kategori = '';
+        $sql = "select ta.*, tb.nama_kategori from barang ta join kategori tb ON ta.id_kategori = tb.id_kategori where ta.status is null and ta.deleted_at is null and ta.diskon = '0'";
+        if(!empty($in->id_kategori)){
+            $sql .= " AND ta.id_kategori = '$in->id_kategori'";
+            $id_kategori = $request->id_kategori;
+        }
+        if(isset($in->nama_tanaman)){
+            $sql .= " AND ta.nama_barang LIKE '%$in->nama_tanaman%' OR tb.nama_kategori LIKE '%$in->nama_tanaman%'";
+        }
+        $q = $in->filter_sort == 'low' ? 'ASC' : 'DESC';
+        $sql .= " ORDER BY ta.hargaJual  $q";
+        $produk = DB::table( DB::raw("($sql) AS a"))->paginate(9);
+        if($request->ajax())
+        {
+            return view('v2.list-produk',compact('produk'))->render();
+        }
+		return view('v2.produk-v2',['produk' => $produk, 'sort_filter' => $sort_filter, 'id_kategori' => $id_kategori]);
+    }
+
 
     public function ProdukTerjual()
     {
@@ -116,5 +139,18 @@ class FullShopController extends Controller
     public function hapusPesanan($id){
         DB::table('temporary_order')->where('id_pre_order', $id)->delete();
         return redirect()->back();
+    }
+
+    public function detailProduk($id){
+        $data = DB::table('barang')->select('barang.*','kategori.nama_kategori','bankdata.kebutuhanAir','bankdata.kebutuhanSinar','bankdata.caraPerawatan')->leftjoin('bankdata','bankdata.id_bankdata','barang.id_bankdata')->join('kategori','kategori.id_kategori','barang.id_kategori')->where('id_barang',$id)->first();
+        $detail = DB::table('detail_barang')->where('id_barang',$id)->get();
+
+        // printJSON($data);
+
+        return view('v2.detail-produk',compact('data','detail'));
+    }
+    public function getKomentar($id_barang){
+        $komentar = DB::table('koment_produk')->join('users','users.id','koment_produk.user_id')->where('produk_id',$id_barang)->get();
+         return $komentar;
     }
 }

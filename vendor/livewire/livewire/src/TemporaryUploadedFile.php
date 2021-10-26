@@ -23,6 +23,11 @@ class TemporaryUploadedFile extends UploadedFile
         parent::__construct(stream_get_meta_data($tmpFile)['uri'], $this->path);
     }
 
+    public function getPath()
+    {
+        return $this->storage->path(FileUploadConfiguration::directory());
+    }
+
     public function isValid()
     {
         return true;
@@ -30,7 +35,7 @@ class TemporaryUploadedFile extends UploadedFile
 
     public function getSize()
     {
-        if (app()->environment('testing') && str($this->getfilename())->contains('-size=')) {
+        if (app()->runningUnitTests() && str($this->getfilename())->contains('-size=')) {
             return (int) str($this->getFilename())->between('-size=', '.')->__toString();
         }
 
@@ -59,7 +64,7 @@ class TemporaryUploadedFile extends UploadedFile
 
     public function temporaryUrl()
     {
-        if (FileUploadConfiguration::isUsingS3() && ! app()->environment('testing')) {
+        if ((FileUploadConfiguration::isUsingS3() or FileUploadConfiguration::isUsingGCS()) && ! app()->runningUnitTests()) {
             return $this->storage->temporaryUrl(
                 $this->path,
                 now()->addDay(),
@@ -67,7 +72,7 @@ class TemporaryUploadedFile extends UploadedFile
             );
         }
 
-        if (! $this->isPreviewable()) {
+        if (method_exists($this->storage->getAdapter(), 'getTemporaryUrl') || ! $this->isPreviewable()) {
             // This will throw an error because it's not used with S3.
             return $this->storage->temporaryUrl($this->path, now()->addDay());
         }

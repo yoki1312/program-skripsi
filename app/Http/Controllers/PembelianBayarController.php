@@ -51,24 +51,24 @@ class PembelianBayarController extends Controller
      */
     public function show($id)
     {
-        $sql = "select ta.*, sum(tb.hargaPenjualan) as total_penjualan from penjualan ta LEFT JOIN detail_penjualan tb ON ta.id_penjualan = tb.id_penjualan WHERE ta.id_penjualan = '$id'";
+        $sql = "select ta.*, sum(tb.hargaPenjualan) + IFNULL(tc.harga,0)  as total_penjualan from penjualan ta LEFT JOIN detail_penjualan tb ON ta.id_penjualan = tb.id_penjualan LEFT JOIN tbl_ongkir tc ON ta.id_penjualan = tc.id_penjualan WHERE ta.id_penjualan = '$id'";
         $order = DB::table( DB::raw("($sql) AS a"))->first();
+        // printJSON($order);
 
         $customer = DB::table('users')->where('id', $order->id_users)->first();
-        $snapToken = $order->snap_token;
+        $snapToken = $order->payment_token;
         if (empty($snapToken)) {
             // Jika snap token masih NULL, buat token snap dan simpan ke database
             
             $midtrans = new CreateSnapTokenService($order, $customer);
             $snapToken = $midtrans->getSnapToken();
-
-            $order->snap_token = $snapToken;
             DB::table('penjualan')->where('id_penjualan', $id)->update([
-                'snap_token' => $snapToken
+                'payment_token' => $snapToken->token,
+                'payment_url' => $snapToken->redirect_url
             ]);
         }
 
-        return view('layouts.plantshop.shop.view', compact('order', 'snapToken'));
+        return view('layouts.plantshop.shop.pembayaran', compact('order', 'snapToken'));
     }
 
     /**
@@ -103,5 +103,12 @@ class PembelianBayarController extends Controller
     public function destroy(Order $order)
     {
         //
+    }
+
+    public function cancel($id){
+        DB::table('penjualan')->where('id_penjualan', $id)->delete();
+        DB::table('detail_penjualan')->where('id_penjualan', $id)->delete();
+
+        return redirect('/');
     }
 }

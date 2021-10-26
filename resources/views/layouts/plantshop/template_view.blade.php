@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="no-js" lang="en">
+<html lang="en">
 
 
 <!-- Mirrored from demo.hasthemes.com/lukani-preview-v1/lukani/index-4.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 01 Dec 2020 11:41:48 GMT -->
@@ -46,6 +46,8 @@
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!--modernizr min js here-->
     <script src="{{ asset('frontEnd/js/vendor/modernizr-3.7.1.min.js') }}"></script>
+    <link rel="stylesheet" href="{{ asset('admin/plugins/select2/css/select2.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('admin/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
 
     <link rel="stylesheet" type="text/css"
         href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css">
@@ -291,7 +293,7 @@
                                             @if(auth::check())
 
                                             <span class="item_count">{{ AllCheckout() }}</span></a>
-                                        @endif
+                                            @endif
                                         <!--mini cart-->
                                         <div class="mini_cart">
                                             <div class="cart_gallery">
@@ -642,6 +644,7 @@
     <script src="{{ asset('frontEnd/js/main.js') }}"></script>
     <script src="{{ asset('js/axios.js') }}"></script>
     <script src="{{ asset('js/koment.js') }}"></script>
+    <script src="{{ asset('admin/plugins/select2/js/select2.full.min.js') }}"></script>
     <script>
         $('#danger').modal('show');
         $(".logout").click(function () {
@@ -652,6 +655,7 @@
     </script>
 
     <script type="text/javascript" src="{{ asset('DataTables/datatables.min.js') }}"></script>
+
     <!-- <script src="https://cdn.datatables.net/select/1.3.3/js/dataTables.select.min.js"></script> -->
     @yield('js')
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Koment;
 use Auth;
+use DB;
 class KomentController extends Controller
 {
     /**
@@ -36,12 +37,17 @@ class KomentController extends Controller
     {
         //
         $koment = new Koment;
-        $koment->name = $request->name;
-        $koment->email = $request->email;
-        $koment->koment = $request->koment;
+        $koment->koment = $request->komentar;
         $koment->produk_id = $request->produk_id;
         $koment->user_id = Auth::user()->id;
+        $koment->created_at = date('Y-m-d');
         $koment->save();
+    }
+    public function removeKoment(Request $request)
+    {
+        //
+        $removeKoment = DB::table('koment_produk')->where('id_koment',$request->id_komentar)->delete();
+        return $removeKoment;
     }
 
     /**

@@ -53,11 +53,11 @@
                                         <div class="action_links list_action_right">
                                             <ul>
                                                 @if($t->id_status_penjualan == 1)
-                                                <button class="btn btn-sm btn-info"><a href="cart.html" title="" data-original-title="Add to cart">Dikonfirmasi</a></button>
+                                                <button class="btn btn-sm btn-info"><a href="cart.html" title="" data-original-title="Add to cart">Pembayaran Sukses</a></button><br><small>Menunggu Konfirmasi</small>
                                                 @elseif($t->id_status_penjualan == 5)
                                                 <button class="btn btn-sm btn-success"><a href="cart.html" title="" data-original-title="Add to cart">Selesai</a></button>
                                                 @else
-                                                <button class="btn btn-sm btn-warning"><a href="cart.html" title="" data-original-title="Add to cart">Belum Dikonfirmasi</a></button>
+                                                <button class="btn btn-sm btn-warning"><a href="cart.html" title="" data-original-title="Add to cart">Selesaikan Pembayaran</a></button>
                                                &nbsp; <a type="submit" href="{{ url('/batal/transaksi/'.$t->id_penjualan) }}" class="btn btn-sm btn-danger"> Batal</a>
                                                 @endif
                                                  <!-- <li class="wishlist"><a href="wishlist.html" title="" data-original-title="Add to Wishlist"><i class="icon-heart"></i></a></li>   

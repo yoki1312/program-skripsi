@@ -9,6 +9,7 @@ use App\Models\PenjualanBarang;
 use App\Models\DetailPenjualan;
 use App\Models\BankData;
 use Illuminate\Support\Facades\DB;
+use App\Services\Midtrans\CreateSnapTokenService;
 use DataTables; 
 use Alert;
 use PDF;
@@ -144,7 +145,8 @@ class PenjualanController extends Controller
     }
     public function storeShop(Request $request)
     {
-
+        // printJSON($request->all());
+        //simapn data penjualan
         $sum = PenjualanBarang::count()+1;
         $rand = rand(0, 50);
         $kode = "PL".$sum.$rand.date('Y/m/d');
@@ -156,7 +158,9 @@ class PenjualanController extends Controller
         $penjualan->id_status_penjualan = 0;
         $penjualan->save();
         $id_penjualan = $penjualan->id;
+        //end
         $data = array();
+        //simpan detail penjualan
         foreach ($request->id_barang as $key) {
             foreach($key as $value){
             // printJSON($value);
@@ -169,19 +173,48 @@ class PenjualanController extends Controller
                     'updated_at' =>  date('Y-m-d H:i:s'),
                     'hargaPenjualan' => $total,
                 );
-                // printJSON($data);
-                $user = Auth::user()->id;
+                DetailPenjualan::insert($data);
+                //hapus data temporary order
+                // $user = Auth::user()->id;
                 // $sql = "DELETE FROM temporary_order WHERE id_barang = '$value' and id_user = '$user' ";
                 // DB::select($sql);
-                // Barang::where('id_barang', $value)->update(array('status' => '1'));
-                DetailPenjualan::insert($data);
+                //end
             }
-            }
-            $data = PenjualanBarang::where('id_penjualan',$id_penjualan)->first(); 
-            $pes = DB::select("SELECT ta.*, tb.hargaPenjualan, tc.gambar_sampul, tc.nama_barang,tc.hargaJual, tc.diskon FROM penjualan ta LEFT JOIN detail_penjualan tb ON ta.id_penjualan = tb.id_penjualan LEFT JOIN barang tc ON tb.id_barang = tc.id_barang where ta.id_penjualan = '$id_penjualan' ");
+        }
+        //end
+        //insert data ongkir
+        $in = $request;
+        DB::table('tbl_ongkir')->insert([
+            'id_penjualan' => $id_penjualan,
+            'expedisi' => $in->expedisi,
+            'estimasi' => $in->estimasi,
+            'layanan_expedisi' => $in->layanan_expedisi,
+            'harga' => $in->harga_ongkir,
+            'berat_barang' => $in->berat_barang,
+            'no_resi' => 0
+        ]);
+        //end
+        $sql = "select ta.*, sum(tb.hargaPenjualan) + IFNULL(tc.harga,0)  as total_penjualan from penjualan ta LEFT JOIN detail_penjualan tb ON ta.id_penjualan = tb.id_penjualan LEFT JOIN tbl_ongkir tc ON ta.id_penjualan = tc.id_penjualan WHERE ta.id_penjualan = '$id_penjualan'";
+        $order = DB::table( DB::raw("($sql) AS a"))->first();
+        // printJSON($order);
         
+        $customer = DB::table('users')->where('id', $order->id_users)->first();
+        $snapToken = $order->payment_token;
+        if (empty($snapToken)) {
+            // Jika snap token masih NULL, buat token snap dan simpan ke database
             
-            return $id_penjualan;
+            $midtrans = new CreateSnapTokenService($order, $customer);
+            $snapToken = $midtrans->getSnapToken();
+            DB::table('penjualan')->where('id_penjualan', $id_penjualan)->update([
+                'payment_token' => $snapToken->token,
+                'payment_url' => $snapToken->redirect_url
+                ]);
+            }
+            // $pes = DB::select("SELECT ta.*, tb.hargaPenjualan, tc.gambar_sampul, tc.nama_barang,tc.hargaJual, tc.diskon FROM penjualan ta LEFT JOIN detail_penjualan tb ON ta.id_penjualan = tb.id_penjualan LEFT JOIN barang tc ON tb.id_barang = tc.id_barang where ta.id_penjualan = '$id_penjualan' ");
+            $data = PenjualanBarang::where('id_penjualan',$id_penjualan)->first(); 
+    
+        
+        return $data;
 
     }
 
@@ -295,6 +328,7 @@ class PenjualanController extends Controller
 
     public function statusBayar(Request $request)
     {
+        printJSON($request->all());
         PenjualanBarang::where('id_penjualan', $request->id_penjualan)->update(array('id_status_penjualan' => $request->status));
         $dd = DetailPenjualan::where('id_penjualan', $request->id_penjualan)->get();
         foreach($dd as $t){
@@ -302,6 +336,7 @@ class PenjualanController extends Controller
             $sql = "DELETE FROM temporary_order WHERE id_barang = '$t->id_barang' and id_user = '$user' ";
             DB::select($sql);
             Barang::where('id_barang', $t->id_barang)->update(array('status' => '1'));
+
         }
         return response()->json(['success' => 'Data Added successfully.']);
     }

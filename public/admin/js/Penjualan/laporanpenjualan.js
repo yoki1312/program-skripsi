@@ -66,11 +66,10 @@ $(document).on('change', '.status', function () {
 
             }
         })
-    .then(function (response) {
-            
+        .then(function (response) {
+
         })
-        .catch(function (error) {
-        })
+        .catch(function (error) {})
         .then(function () {
             Swal.fire(
                 'Berhasil!',

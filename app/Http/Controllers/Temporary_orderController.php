@@ -54,11 +54,25 @@ class Temporary_orderController extends Controller
      */
     public function store(Request $request)
     {
-        $preOrder = new TemporaryOrder;
-        $preOrder->qty = $request->koment;
-        $preOrder->id_barang = $request->produk_id;
-        $preOrder->id_user = Auth::user()->id;
-        $preOrder->save();
+        $check_data = DB::table('temporary_order')->where('id_barang', $request->produk_id)->where('id_user',Auth::user()->id)->count();
+        if($check_data == '0'){
+            $preOrder = new TemporaryOrder;
+            $preOrder->qty = $request->koment;
+            $preOrder->id_barang = $request->produk_id;
+            $preOrder->id_user = Auth::user()->id;
+            $preOrder->save();
+            return response()->json([
+                'status' => 200,
+                'message' => 'Barang Ditambahkan',
+                'total_item'   => $check_data
+            ]);
+        }else{
+            return response()->json([
+                'status' => 404,
+                'message' => 'Exist Item',
+                'total_item'   => $check_data
+            ]);
+        }
     }
 
     /**

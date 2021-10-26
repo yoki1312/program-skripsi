@@ -105,6 +105,29 @@ class ProfileController extends Controller
             ]);
             return redirect('profile')->with(['success' => 'Update data berhasil']);
     }
+    public function updatev2(Request $request)
+    {
+        $user = Auth::user();
+        $foto = '';
+        if(isset($request->foto_profile)){
+            $file = $request->file('foto_profile');
+            $nama_file = time()."_".$file->getClientOriginalName();
+            $file->move(public_path().'/upload/foto_profile/', $nama_file);
+            $foto = $nama_file;        
+        }
+        DB::table('users')
+                ->where('id', $user->id)
+                ->update([
+                    'name' => $request->name,
+                    'email' => $request->email,
+                    'tanggal_lahir' => date('Y-m-d', strtotime($request->tanggal_lahir)),
+                    'no_wa' => $request->no_hp,
+                    'alamat' => $request->alamat,
+                    'foto_profile' => $foto == '' ? $user->foto_profile : $foto,
+                    'password' => $request->pass == null ? $user->password : Hash::make($request->pass),
+            ]);
+            return redirect()->back()->with(['success' => 'Update data berhasil']);
+    }
 
     /**
      * Remove the specified resource from storage.

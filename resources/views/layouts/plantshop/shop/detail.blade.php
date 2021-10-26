@@ -17,7 +17,7 @@
     </div>
 </div>
 </div>
-<div class="product_details mt-100 mb-100" <hr>
+<div class="product_details mt-100 mb-100"> <hr>
     <div class="container">
         <div class="row">
             <div class="col-lg-6 col-md-6">

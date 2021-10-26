@@ -114,16 +114,7 @@ $(document).ready(function () {
     });
 
 
-    $(document).on('click', '.remove-order', function () {
-        let index = $(this).data('row');
-        var data = oTable.row(index).data();
-        console.log(data);
-        axios.post('/deleted-to-cart/' + data.id_pre_order).then((response) => {
-            oTable.ajax.reload(null, false);
-        }).catch((error) => {
-            console.log(error.response.data)
-        });
-    });
+   
 
 });
 

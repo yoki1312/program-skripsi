@@ -5,7 +5,7 @@ use App\Models\Kategori;
 use App\Services\Midtrans\CreateSnapTokenService;
 
 function AllProdukOne(){
-    $Produk = Produk::skip(0)->take(4)->whereNull('deleted_at')->whereNull('status')->get();
+    $Produk = Produk::join('kategori','kategori.id_kategori','barang.id_kategori')->skip(0)->take(6)->whereNull('deleted_at')->whereNull('status')->get();
     // printJSON($Produk);
     return $Produk;
 }
@@ -22,7 +22,7 @@ function newsProduk(){
     return $Produk;
 }
 function Kategori(){
-    $Kategori = Kategori::all();
+    $Kategori = DB::select('select tb.*, COUNT(ta.id_barang) as jumlah_barang from barang ta INNER JOIN kategori tb ON ta.id_kategori = tb.id_kategori WHERE ta.`status` is null GROUP BY ta.id_kategori ORDER BY COUNT( ta.id_barang ) desc');
     return $Kategori;
 }
 function pesananku(){
@@ -90,6 +90,11 @@ function snapToken(){
         $order->snap_token = $snapToken;
         $order->save();
     }
+}
+
+function getTotalBarang(){
+    $data = Produk::join('kategori','kategori.id_kategori','barang.id_kategori')->whereNull('deleted_at')->whereNull('status')->count();
+    return $data;
 }
 
 ?>

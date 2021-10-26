@@ -224,6 +224,7 @@ Route::get('/konfirmasiPembayaran', function () {
 Route::get('/myAcount', function () {
     return view('layouts.plantshop.akun.profile');
 });
+Route::post('update/profile-v2', 'App\Http\Controllers\ProfileController@updatev2');
 
 
 
@@ -252,6 +253,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::post('penjualan/storeShop', 'App\Http\Controllers\PenjualanController@storeShop');
 Route::get('pembelian/bayar/{id}', 'App\Http\Controllers\PembelianBayarController@show');
+Route::get('unOrder/{id}', 'App\Http\Controllers\PembelianBayarController@cancel');
 // bank data frond end
 Route::resource('bank_data', 'App\Http\Controllers\BankDataFrondController');
 Route::get('/detail/bankdata/{id}','App\Http\Controllers\BankDataFrondController@show');
@@ -262,4 +264,52 @@ Route::post('cari/barang/','App\Http\Controllers\FullShopController@index');
 
 //temporary order
 
+
+Route::post('payments/notification', 'App\Http\Controllers\PaymentController@notification');
+Route::get('payments/completed', 'App\Http\Controllers\PaymentController@completed');
+Route::get('payments/failed', 'App\Http\Controllers\PaymentController@failed');
+Route::get('payments/unfinish', 'App\Http\Controllers\PaymentController@unfinish');
+
+//rajaongkir
+Route::get('ongkir/provinsi', 'App\Http\Controllers\OngkirController@getProvinsi');
+Route::get('ongkir/kota', 'App\Http\Controllers\OngkirController@getKota');
+Route::post('ongkir/harga', 'App\Http\Controllers\OngkirController@getOngkir');
+
+
+
+Route::get('/index', function () {
+    return view('v2.home');
+});
+Route::get('/profile-v2', function () {
+    return view('v2.profile');
+});
+//get produk
+Route::get('/produk-v2','App\Http\Controllers\FullShopController@indexV2');
+Route::get('/produk-v2/detail/{id}','App\Http\Controllers\FullShopController@detailProduk');
+//end
+//halaman order
+Route::get('/order','App\Http\Controllers\DataOrderController@order');
+//end
+//komentar produk
+Route::post('/produk-v2/getKomentar/{id}','App\Http\Controllers\FullShopController@getKomentar');
+Route::post('/produk-v2/postKoment','App\Http\Controllers\KomentController@store');
+Route::post('/produk-v2/removeKoment','App\Http\Controllers\KomentController@removeKoment');
+//get jumlah pre order
+Route::post('/getDataPreorder','App\Http\Controllers\DataOrderController@getDataPreOrder');
+//end
+//google login
+Route::get('auth/google', 'App\Http\Controllers\GoogleController@redirectToGoogle');
+Route::get('auth/google/callback', 'App\Http\Controllers\GoogleController@handleGoogleCallback');
+//end
+//artikel
+Route::get('/artikel-v2','App\Http\Controllers\ArtikelController@daftarArtikel');
+Route::get('/detail/artikel-V2/{id}','App\Http\Controllers\ArtikelController@detailArtikel');
+//komentar artikel
+Route::post('/artikel-v2/getKomentar/{id}','App\Http\Controllers\ArtikelController@getKomentar');
+Route::post('/artikel-v2/postKoment','App\Http\Controllers\ArtikelController@store');
+Route::post('/artikel-v2/removeKoment','App\Http\Controllers\ArtikelController@removeKoment');
+//end
+//transaksi
+Route::get('/transaksi-v2','App\Http\Controllers\TransaksiController@index');
+Route::get('/transaksi-v2/batal/{id}','App\Http\Controllers\TransaksiController@pembatalanTransaksi');
 
