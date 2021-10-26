@@ -40,8 +40,7 @@ class FullShopController extends Controller
             $sql .= " AND ta.nama_barang LIKE '%$in->nama_tanaman%' OR tb.nama_kategori LIKE '%$in->nama_tanaman%'";
         }
         $q = $in->filter_sort == 'low' ? 'ASC' : 'DESC';
-        $sql .= " ORDER BY ta.hargaJual  $q";
-        $produk = DB::table( DB::raw("($sql) AS a"))->paginate(9);
+        $produk = DB::table( DB::raw("($sql) AS a"))->orderby('hargaJual', $q)->paginate(9);
         if($request->ajax())
         {
             return view('v2.list-produk',compact('produk'))->render();

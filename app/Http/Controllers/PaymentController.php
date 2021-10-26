@@ -32,7 +32,11 @@ class PaymentController extends Controller
 		Config::$is3ds = $this->is3ds;
 	}
     public function notification(Request $request){
+
+		//get id_penjualan
 		$order = DB::table('penjualan')->where('no_invoice', $request->order_id)->first();
+		//end
+
 		//insert notifikasi from midtrans
 		$data = DB::table('notifikasi_payment')->insert([
 			'order_id'=> $order->id_penjualan,
@@ -48,18 +52,25 @@ class PaymentController extends Controller
 		]);
 		//end
 
-		//update status penjualan
-		DB::table('penjualan')->where('id_penjualan',$order->id_penjualan)->update([
-			'id_status_penjualan' => '1'
-		]);
-		//end
-		
+		if($request->status_code == '200'){
+			//update status penjualan
+			DB::table('penjualan')->where('id_penjualan',$order->id_penjualan)->update([
+				'id_status_penjualan' => '1'
+			]);
+			//end
+	
+			//remove temporary order
+			$detail_penjualan = DB::table('detail_penjualan')->where('id_penjualan',$order->id_penjualan)->get();
+			foreach($detail_penjualan as $d){
+				DB::table('temporary_order')->where('id_barang',$d->id_barang)->delete();
+			}
+			//end
+
+		}
+
 		return response($data, 200);
     }
 
-	function removeString($kalimat){
-		return substr($kalimat,'1','-1');
-	}
     public function completed(Request $request){
        return redirect('myOrder');
     }

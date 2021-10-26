@@ -120,10 +120,17 @@
         <div class="container margin_detail">
             <div id="collapseOne" class="row collapse show" aria-labelledby="headingOne" data-parent="#accordion">
                 <div class="col-lg-12 list_menu">
+                <?php $no = 1 ?>
                     @foreach($data as $d)
                     <section id="section-1">
                         <h4>{{ $d->no_invoice }} - {{ date('d F Y' ,strtotime($d->tgl_penjualan)) }}</h4>
-                        <div class="table_wrapper">
+                        <h4>
+                            <div class="btn-group" role="group" aria-label="Basic example">
+                            <button type="button" class="btn btn-sm btn-outline-secondary"><?= $d->status_transaksi ?></button>
+                            <a class="btn btn-info btn-sm" data-toggle="collapse" href="#penjualan{{ $d->id_penjualan }}" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">Detail</a>
+                            </div>
+                        </h4>
+                        <div class="table_wrapper collapse multi-collapse <?= $no++ == 1 ? 'show' : '' ?>" id="penjualan{{ $d->id_penjualan }}">
                             <table class="table cart-list menu-gallery">
                                 <thead>
                                     <tr>
