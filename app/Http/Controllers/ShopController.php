@@ -66,7 +66,7 @@ class ShopController extends Controller
         // printJSON($barang);
         $barang_detail = DetailBarang::where('id_barang',$id)->get();
         $koment = Koment::where('produk_id',$id)->get();
-        return view('layouts.plantshop.shop.detail',compact('barang','barang_detail','koment','data','detil'));
+        return view('layouts.plantshop.shop.detail',compact('barang','barang_detail','koment','data','detail'));
     }
 
     /**
