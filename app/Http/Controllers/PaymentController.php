@@ -72,7 +72,7 @@ class PaymentController extends Controller
     }
 
     public function completed(Request $request){
-       return redirect('myOrder');
+       return redirect('/transaksi-v2');
     }
     public function unFinish(Request $request){
 
