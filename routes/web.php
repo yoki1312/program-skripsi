@@ -282,6 +282,7 @@ Route::get('/profile-v2', function () { return view('v2.profile'); });
 Route::get('/about-v2', function () { return view('v2.about-v2'); });
 //get produk
 Route::get('/produk-v2','App\Http\Controllers\FullShopController@indexV2');
+Route::post('/cari/produk-v2','App\Http\Controllers\FullShopController@indexV2');
 Route::get('/produk-v2/detail/{id}','App\Http\Controllers\FullShopController@detailProduk');
 //end
 //halaman order

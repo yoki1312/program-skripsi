@@ -9,11 +9,12 @@
                 <div class="col-xl-7 col-lg-8">
                     <h1>Plantshop.id</h1>
                     <p>Plant For Happines</p>
-                    <form method="post" action="grid-listing-filterscol.html">
+                    <form method="post" action="{{ url('cari/produk-v2') }}">
+                        @csrf
                         <div class="row no-gutters custom-search-input">
                             <div class="col-lg-10">
                                 <div class="form-group">
-                                    <input class="form-control no_border_r" type="text"
+                                    <input name="nama_tanaman" class="form-control no_border_r" type="text"
                                         placeholder="Nama Tanaman">
                                 </div>
                             </div>
