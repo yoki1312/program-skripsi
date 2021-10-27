@@ -5,3 +5,5 @@
 *.ali
 public/.DS_Store
 .env
+vendor
+config/services.php
