@@ -123,7 +123,6 @@
                     <img src="{!! asset('v2/img/logo.png')!!}" width="162" height="35" alt="">
                 </a>
             </div>
-            <div class="layer"></div><!-- Opacity Mask Menu Mobile -->
             @if(isset(Auth::user()->id))
             <ul id="top_menu" class="drop_user">
                 <li>
@@ -154,6 +153,7 @@
                 </li>
             </ul>
             @endif
+            <div class="layer"></div><!-- Opacity Mask Menu Mobile -->
             <ul id="top_menu" style="margin-top: 10px;">
                 @if(!isset(Auth::user()->id))
                 <li><a href="#sign-in-dialog" id="sign-in"><i style="font-size: 20px" class="fa fa-sign-in"
